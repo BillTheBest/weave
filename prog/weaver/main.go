@@ -248,7 +248,7 @@ func main() {
 	}
 
 	if bridgeConfig.DockerBridgeName != "" {
-		if err := weavenet.EnforceAddrAssignType(bridgeConfig.DockerBridgeName); err != nil {
+		if err := weavenet.EnforceAddrAssignType(hostRoot, bridgeConfig.DockerBridgeName); err != nil {
 			Log.Errorf("While checking address assignment type of %s: %s", bridgeConfig.DockerBridgeName, err)
 		}
 	}
@@ -256,7 +256,7 @@ func main() {
 	name := peerName(routerName, bridgeConfig.WeaveBridgeName, dbPrefix, hostRoot)
 
 	bridgeConfig.Mac = name.String()
-	bridgeType, err := weavenet.CreateBridge(&bridgeConfig)
+	bridgeType, err := weavenet.CreateBridge(hostRoot, &bridgeConfig)
 	checkFatal(err)
 	Log.Println("Bridge type is", bridgeType)
 
