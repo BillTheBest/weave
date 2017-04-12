@@ -363,15 +363,6 @@ delete_iptables_rule() {
     fi
 }
 
-# Configure the ARP cache parameters for the given interface.  This
-# makes containers react more quickly to a change in the MAC address
-# associated with an IP address.
-configure_arp_cache() {
-    $2 sh -c "echo 5 >$PROC_PATH/sys/net/ipv4/neigh/$1/base_reachable_time &&
-              echo 2 >$PROC_PATH/sys/net/ipv4/neigh/$1/delay_first_probe_time &&
-              echo 1 >$PROC_PATH/sys/net/ipv4/neigh/$1/ucast_solicit"
-}
-
 # Send out an ARP announcement
 # (https://tools.ietf.org/html/rfc5227#page-15) to update ARP cache
 # entries across the weave network.  We do this in addition to
